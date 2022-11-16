@@ -18,7 +18,7 @@
  */
 
 #include <hal/pulp.h>
-#include "pulp.h"
+#include "pmsis.h"
 
-L2_DATA uint8_t ${vector_name}[${dimension}] = {
+PI_L2 uint8_t ${vector_name}[${dimension}] = {
 ${vector}};

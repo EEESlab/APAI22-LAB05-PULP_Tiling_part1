@@ -2,10 +2,10 @@
 APP        =  test
 
 # Specifies to the compiler the files to compile
-APP_SRCS    += Src_solution/main.c
+APP_SRCS    += Src/main.c
 
 # Add here other sources if you have (i.e. APP_CFLAGS += my_conv.c)
-APP_SRCS := $(wildcard Src_solution/*.c)
+APP_SRCS := $(wildcard Src/*.c)
 # Specifies c compiler's flags
 APP_CFLAGS += -O3 -IInc
 
