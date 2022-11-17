@@ -15,8 +15,8 @@
 int NETWORK_IDS[NB_LAYER] = {0};
 int NETWORK_TYPES[NB_LAYER] = {CONV};
 
-#define CHANNELS /* COMPLETE EX1 */
-#define SPATIAL_DIM /* COMPLETE EX1 */
+#define CHANNELS 1
+#define SPATIAL_DIM 1
 
 int NETWORK_DIMS[NB_LAYER][NB_DIM_ARGS] = {{SPATIAL_DIM, //x_in
                                             SPATIAL_DIM, //y_in
@@ -45,7 +45,7 @@ void cluster_init()
   printf("-> Entering Cluster Initialization...\n");
 #endif
   /*
-   * Alloc L1 space for tiles: BE CAREFUL -> L1 is very limited
+   * Alloc L1 space for tiles: BE CAREFUL -> L1 is very limited (64kB)
    */
   l1_layer.id   = LAYER_ID(0);
   l1_layer.type = LAYER_TYPE(0);
@@ -65,7 +65,8 @@ void cluster_init()
   l1_layer.layer_dim.y_stride = network_layers[0].layer_dim.y_stride;
 
 #ifdef EXERCISE3
-  int TILING_PARAMETER =  /* COMPLETE EX3 */;
+  /* EXERCISE3: ADD TILING FACTOR */
+  int TILING_PARAMETER =  /* YOUR_CODE_HERE */;
   l1_layer.layer_dim.x_in  = network_layers[0].layer_dim.x_in  / TILING_PARAMETER;
   l1_layer.layer_dim.y_in  = network_layers[0].layer_dim.y_in  / TILING_PARAMETER;
   l1_layer.layer_dim.x_out = network_layers[0].layer_dim.x_out / TILING_PARAMETER;
@@ -78,11 +79,29 @@ void cluster_init()
 #endif
 
 
+/* EXERCISE1.1: ALLOCATE MEMORY FOR CHANNELS AND SPATIAL DIMENSIONS */
+/**
+ * Suggestion: the input/kernel/output sizes are stored in these variables:
+ * Input:
+ *    l1_layer.layer_dim.x_in
+ *    l1_layer.layer_dim.y_in
+ *    l1_layer.layer_dim.c_in
+ * Kernel:
+ *    l1_layer.layer_dim.x_ker
+ *    l1_layer.layer_dim.y_ker
+ * Output:
+ *    l1_layer.layer_dim.x_out
+ *    l1_layer.layer_dim.y_out
+ *    l1_layer.layer_dim.c_out
+ * Then multiply by  sizeof(unsigned char) to get the size in Byte
+ */
+
 #ifndef EXERCISE2
-  l1_layer.input_data  = pi_l1_malloc(&cluster, /* COMPLETE EX1 WITH CORRECT DIMENSION */);
-  l1_layer.param_data  = pi_l1_malloc(&cluster, /* COMPLETE EX1 WITH CORRECT DIMENSION */);
-  l1_layer.output_data = pi_l1_malloc(&cluster, /* COMPLETE EX1 WITH CORRECT DIMENSION */);
+  l1_layer.input_data  = pi_l1_malloc(&cluster, (unsigned int) (/* YOUR_CODE_HERE */)  * sizeof(/* YOUR_CODE_HERE */);
+  l1_layer.param_data  = pi_l1_malloc(&cluster, (unsigned int) (/* YOUR_CODE_HERE */)  * sizeof(/* YOUR_CODE_HERE */);
+  l1_layer.output_data = pi_l1_malloc(&cluster, (unsigned int) (/* YOUR_CODE_HERE */)  * sizeof(/* YOUR_CODE_HERE */);
 #endif
+
 
   /*
    * PULP-NN Conv kernel exploits im2col to reorder the input data: Take it into account for L1 space
@@ -135,6 +154,15 @@ int main()
   {
     return err;
   }
+
+  /*
+   * Now you should have all the parameters in L2 to compute the output of the first layer
+   */
+  /* 
+   * DESCRIPTION:
+   * PULP Cluster has 8 identical cores that can share and compute heavy computational workload in parallel.
+   * PULP Cluster is a PMSIS device. Open it and send the task to initialize it.
+   */
 
   struct pi_cluster_conf cluster_conf;
    pi_cluster_conf_init(&cluster_conf);

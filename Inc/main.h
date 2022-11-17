@@ -16,9 +16,9 @@
 #include "pulp_nn_kernels.h"
 #include "bsp/bsp.h"
 
-//#define EXERCISE1
-//#define EXERCISE2
-#define EXERCISE3
+#define EXERCISE1
+// #define EXERCISE2
+// #define EXERCISE3
 
 #define GENERAL_ERROR    1
 #define FLASH_ERROR      2

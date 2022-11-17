@@ -78,12 +78,28 @@ void layer_run()
    * Cluster performance counters
    */
 #if defined(PERFORMANCE)
-  /* COMPLETE EX1/2/3 WITH PERF COUNTER INIT */
+  /* EXERCISE1.1: COMPLETE WITH PERF COUNTER INIT */
+  pi_perf_conf(1 << /*YOUR_CODE_HERE*/      //active cycles
+              |1 << /*YOUR_CODE_HERE*/      //cycles
+              |1 << /*YOUR_CODE_HERE*/      //instructions
+              );
+  pi_perf_/*YOUR_CODE_HERE*/; //reset
+  pi_perf_/*YOUR_CODE_HERE*/; //start  
 #endif
-  
+
 #ifdef EXERCISE3
-  nb_h_tile = /* COMPLETE EX3 WITH NUMBER OF TILES ON H DIM */;
-  nb_w_tile = /* COMPLETE EX3 WITH NUMBER OF TILES ON W DIM */;
+  /* EXERCISE3:  COMPLETE WITH NUMBER OF TILES ON H and W DIM */
+  /** suggestion:
+   * These are the variables that store the layers' sizes
+   * 1. Network's layers:
+   *    network_layers[0].layer_dim.x_in --> w dimension
+   *    network_layers[0].layer_dim.y_in --> h dimension
+   * 2. L1 layer:
+   *    l1_layer.layer_dim.x_in          --> w dimension
+   *    l1_layer.layer_dim.y_in          --> h dimension
+   */
+  nb_h_tile = /* YOUR_CODE_HERE */;
+  nb_w_tile = /* YOUR_CODE_HERE */;
 #else
   nb_h_tile = 1;
   nb_w_tile = 1;
@@ -112,9 +128,10 @@ void layer_run()
   }
 
 #if defined(PERFORMANCE)
-  /* COMPLETE EX1/2/3 WITH PERF COUNTER READING */
-  uint32_t instr_cnt      = /* COMPLETE EX1/2/3 */;
-  uint32_t cycles_cnt     = /* COMPLETE EX1/2/3 */;
+  /* EXERCISE1.1: COMPLETE WITH PERF COUNTER READING */
+  uint32_t instr_cnt      = /* YOUR_CODE_HERE */;
+  uint32_t cycles_cnt     = /* YOUR_CODE_HERE */;
+  uint32_t act_cycles_cnt = /* YOUR_CODE_HERE */;
   printf("[0]: instructions = %d, tot_cycles = %d\n", instr_cnt, cycles_cnt);
 #endif
 

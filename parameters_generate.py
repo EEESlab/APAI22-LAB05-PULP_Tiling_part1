@@ -44,7 +44,8 @@ def create_h_file(vector, name):
     root = os.path.dirname(__file__)
     tmpl = Template(filename=os.path.join(root, "vector_template.h"))
     s_h = tmpl.render(**tk)
-    save_string = os.path.join(root, 'inc/'+ name +'.h') 
+    save_string = os.path.join(root, 'Inc/'+ name +'.h') 
+    print("creating this file:", save_string)
     with open(save_string, "w") as f:
         f.write(s_h)
 
@@ -94,7 +95,7 @@ def create_layer( channels, spatial_dim, input=None, weight=None, batchnorm_para
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('channels', type=int, help='Number of input and output channels')
-    parser.add_argument('spatial_dimensions', type=int, help='Spatial dimension')
+    parser.add_argument('--channels', type=int, help='Number of input and output channels', default=1)
+    parser.add_argument('--spatial_dimensions', type=int, help='Spatial dimension', default=1)
     args = parser.parse_args()
     create_layer(channels = args.channels, spatial_dim = args.spatial_dimensions)
